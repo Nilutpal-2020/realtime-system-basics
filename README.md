@@ -8,7 +8,7 @@
 3. Build and run the services:
 
 ```bash
-docker-compose up --build
+docker-compose up --build -d
 ```
 
 This command will:
@@ -16,6 +16,11 @@ This command will:
 - Build the producer and consumer images from their Dockerfiles.
 - Download the confluentinc/cp-zookeeper, confluentinc/cp-kafka, and questdb/questdb images.
 - Start all services in the correct order, waiting for dependencies (e.g., Kafka waits for Zookeeper).
+
+To stop and remove the containers:
+```bash
+docker-compose down -v
+```
 
 ### Testing the Setup
 1. **QuestDB Console**: Open your browser to `http://localhost:9000/index.html`. You should see the QuestDB web console.
@@ -26,7 +31,7 @@ CREATE TABLE locations (
     lat DOUBLE,
     lon DOUBLE,
     timestamp TIMESTAMP
-) timestamp(timestamp) PARTITION BY DAY WITH WAL;
+) timestamp(timestamp) PARTITION BY DAY WAL;
 ```
 3. **Send Data (to FastAPI)**: In a separate terminal, send data to your FastAPI producer:
 ```bash
