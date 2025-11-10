@@ -24,6 +24,7 @@ docker-compose down -v
 
 ### Testing the Setup
 1. **QuestDB Console**: Open your browser to `http://localhost:9000/index.html`. You should see the QuestDB web console.
+
 2. **Create Table**: In the QuestDB console, run your CREATE TABLE statement:
 ```sql
 CREATE TABLE locations (
@@ -33,12 +34,14 @@ CREATE TABLE locations (
     timestamp TIMESTAMP
 ) timestamp(timestamp) PARTITION BY DAY WAL;
 ```
+
 3. **Send Data (to FastAPI)**: In a separate terminal, send data to your FastAPI producer:
 ```bash
 curl -X POST http://localhost:8000/track -H "Content-Type: application/json" -d '{"id": "v1", "lat": 34.0522, "lon": -118.2437}'
 ```
 You should get a `{"status": "success", ...}` response. Send a few more with different `ids` or `lat/lon` values.
-5. **Verify Data in QuestDB**: Go back to the QuestDB console and query your table:
+
+4. **Verify Data in QuestDB**: Go back to the QuestDB console and query your table:
 ```sql
 SELECT * FROM locations;
 ```
